@@ -256,8 +256,6 @@
               "#272168",
               "#0b1354",
             ]);
-          // color(undefined);
-          //color.domain([extent[0], extent[100]]);
 
           d3legend
             .title(cols[measure].label)
@@ -311,6 +309,9 @@
               } else {
                 return "#ccc";
               }
+            })
+            .attr("county", function (d) {
+              return d.properties.srez;
             });
         }
 
@@ -510,36 +511,49 @@
         // loop through countyObj
         for (i = 0; i < global_data.length; i++) {
           all_counties.push(global_data[i]["srez"]);
-          console.log(global_data[i]["srez"]);
         }
 
         // use Jquery autocomplete
         ////////////////////////////////
         $("#county_search_box").autocomplete({
           source: all_counties,
+          select: function (event, ui) {
+            var value = ui.item.value;
+            find_county(value);
+          },
         });
 
         $("#county_search_box").keyup(function (e) {
           if (e.keyCode == 13) {
-            // Do something
-            // console.log('pressed enter');
             find_county();
           }
         });
       });
 
       // find county in data
-      function find_county() {
-        // get the queried county
-        search_county = $("#county_search_box").val();
-        if (all_counties.indexOf(search_county) != -1) {
+      function find_county(county) {
+        if (!county) {
+          county = $("#county_search_box").val();
+        }
+
+        if (all_counties.includes(county)) {
           // zoom and highlight identified county
-          /////////////////////////////////
-          highlight_searched(search_county);
+          highlight_searched(county);
         }
       }
 
       // zoom into and highlight the found the county
+      function highlight_searched(county) {
+        let currentlyHighlighted = $(".highlightedPath")[0];
+
+        if (currentlyHighlighted) {
+          currentlyHighlighted.classList.remove("highlightedPath");
+        }
+
+        let element = $(`[county='${county}']`)[0];
+
+        element.classList.add("highlightedPath");
+      }
 
       // load data
       d3.queue()

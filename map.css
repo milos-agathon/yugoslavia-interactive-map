@@ -34,6 +34,10 @@ path:hover {
   transition: stroke 0.2s ease-in-out, fill 0.2s ease-in-out;
 }
 
+path.highlightedPath {
+  fill: #46a10d !important;
+}
+
 .tooltip {
   border-radius: 5px;
   background: rgba(51, 51, 51, 0.75);
@@ -44,15 +48,6 @@ path:hover {
   font-family: "Montserrat";
   transition: all 0.2s ease-in-out;
 }
-
-/* SVG Scaling */
-/*body,*/
-/*svg {*/
-/*    height: 100%;*/
-/*    margin: 0;*/
-/*    width: 100%;*/
-/*    float: left;*/
-/*}*/
 
 .scaling-svg-container {
   position: relative;
@@ -73,10 +68,6 @@ path:hover {
   width: 80%;
   top: 10%;
   left: 10%;
-}
-
-/*container for gene search box*/
-#county_search_container {
 }
 
 /*gene search box */
