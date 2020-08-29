@@ -64,13 +64,23 @@
       <div class="row">
         <div class="col-xs-4 col-md-4">
           <div class="form-group">
-            <label for="dimensions" class="col-form-label"
-              >CHOOSE CATEGORY
+            <label for="dimensions" class="col-form-label">
+              CHOOSE CATEGORY
             </label>
             <select class="form-control" id="dimensions"></select>
           </div>
+          <!-- input box for county search -->
+          <div id="county_search_container">
+            <label for="county_search_box" class="col-form-label">SEARCH</label>
+            <input
+              id="county_search_box"
+              type="text"
+              class="form-control"
+              placeholder="Type county name (e.g. Azbukovica)"
+              aria-describedby="sizing-addon2"
+            />
+          </div>
         </div>
-        <div class="col-xs-8 col-md-8"></div>
       </div>
       <div class="row" id="canvas">
         <div class="col-md-9 col-xs-9">
@@ -87,35 +97,21 @@
       </div>
       <div class="row">
         <div class="col-xs-12 col-md-12" id="source">
+          <div>
+            Map by
+            <a target="_blank" rel="noopener" href="https://milosp.info"
+              >Miloš Popović</a
+            >
+            and
+            <a
+              target="_blank"
+              rel="noopener"
+              href="https://aleksandarpopovic.com/"
+              >Aleksandar Popović</a
+            >
+          </div>
           <footnote></footnote>
         </div>
-      </div>
-      <div class="col-xs-12 col-md-12">
-        <footer>
-          <span>Map by <a href="https://milosp.info">Miloš Popović</a></span>
-        </footer>
-      </div>
-    </div>
-
-    <!-- input box for county search -->
-    <div id="county_search_container" class="row">
-      <input
-        id="county_search_box"
-        type="text"
-        class="form-control"
-        placeholder="Type county name (e.g. Azbukovica)"
-        aria-describedby="sizing-addon2"
-      />
-
-      <div id="county_search_button" class="btn-group" data-toggle="buttons">
-        <label
-          id="county_search_submit"
-          class="btn btn-primary active"
-          onclick="find_county();"
-        >
-          <input type="radio" name="options" id="" autocomplete="off" checked />
-          Search
-        </label>
       </div>
     </div>
 
@@ -293,6 +289,14 @@
             )
             .style("font-size", 18)
             .style("font-weight", 800);
+
+          svg
+            .select(".legend")
+            .append("rect")
+            .attr("width", "50%")
+            .attr("height", "10%")
+            .attr("fill", "rgba(255, 255, 255, 0.5)");
+
           legend.call(d3legend);
 
           countyPath
@@ -405,11 +409,7 @@
           .style("opacity", 1)
           .text(description);
         textFootnote.html(
-          '<em>Source: </em><span><a href="' +
-            url +
-            '" target="_blank">' +
-            source +
-            "</span></a>"
+          `<div>Source: <a href=${url} target="_blank" rel="noopener">${source}</a></div>`
         );
       }
 
@@ -510,6 +510,7 @@
         // loop through countyObj
         for (i = 0; i < global_data.length; i++) {
           all_counties.push(global_data[i]["srez"]);
+          console.log(global_data[i]["srez"]);
         }
 
         // use Jquery autocomplete
