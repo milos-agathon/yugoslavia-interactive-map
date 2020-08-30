@@ -1,9 +1,10 @@
 body {
   font-family: "Montserrat";
+  margin-top: -3rem;
 }
 
 .container {
-  width: 90% !important;
+  width: 80% !important;
 }
 
 hr {
